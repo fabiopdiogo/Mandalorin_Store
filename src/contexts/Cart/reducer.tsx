@@ -12,6 +12,16 @@ export const cartReducer = (cartState: any, action: any)=> {
         ...cartState,
         cartItems: cartState.cartItems.filter(item => item.id !== action.payload),
       };
+      case 'UPDATE_CART_QTY':
+        return {
+          ...cartState,
+          cart: cartState.cartItems.map((item: any) => {
+            if (item.id === action.payload.id) {
+              return { ...item, quantity: action.payload.quantity };
+            }
+            return item;
+          }),
+        };
     case 'CLEAR_CART':
     return {
       ...cartState,

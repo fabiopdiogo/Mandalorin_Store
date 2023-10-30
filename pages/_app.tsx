@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 import theme from '../src/theme'
-import { CartProvider } from '../src/contexts/CartProvider';
+import { CartProvider } from '../src/contexts/Cart/CartProvider';
 const GlobalStyle = createGlobalStyle`
   * {
     padding: 0;

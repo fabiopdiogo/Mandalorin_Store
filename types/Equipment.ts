@@ -4,6 +4,6 @@ export type Equipment={
   description: string,
   image: string,
   price: number,
-  isAvailable: true,
+  isAvailable: boolean,
   rating: number
 };

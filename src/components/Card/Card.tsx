@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Equipment } from '../../../types/Equipment';
-import { CartContext } from '../../contexts/CartContext';
+import { CartContext } from '../../contexts/Cart/CartContext';
 
 const theme = {
   primaryColor: '#99c1eb', // Exemplo de cor primária

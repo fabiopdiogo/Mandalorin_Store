@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import styles from "./Navbar.module.css";
-//import { Link } from 'react-router-dom';
+
 import Link from 'next/link';
 import Filter from '../Filter/Filter'
-import { CartContext } from '../../contexts/CartContext';
+import { CartContext } from '../../contexts/Cart/CartContext';
 import { Equipment } from '../../../types/Equipment';
+import { equipments } from '../../equipments/equipments';
 
 interface Props {
-  setEquipmentFiltered: (filteredData: any[]) => void;
+  setEquipmentFiltered: (filteredData: Equipment[]) => void;
 }
 
 const Navbar = ({setEquipmentFiltered}: Props) => {
   const {
-    cartState: {equipments}
+    cartState 
   } = useContext(CartContext);
 
   const [filteredData, setFilteredData] = useState(equipments);
@@ -23,8 +24,6 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
   },[filteredData])
 
   const handleFilterChange = (filter) => {
-    // Aqui você deve processar os filtros e atualizar os dados filtrados
-    // Neste exemplo, estamos apenas imprimindo os filtros no console
     console.log('Filtros:', filter);
   
     let equipmentFiltered = equipments.filter((e) => (
@@ -32,26 +31,26 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
     ));
     
     if(filter.minRating!=''){
-      equipmentFiltered = equipmentFiltered.filter((e) =>
-      parseFloat(e.rating) >= parseFloat(filter.minRating)
+      equipmentFiltered = equipmentFiltered.filter((e : Equipment) =>
+      e.rating >= parseFloat(filter.minRating)
       );
     }
 
     if(filter.maxRating!=''){
       equipmentFiltered = equipmentFiltered.filter((e) =>
-      parseFloat(e.rating) <= parseFloat(filter.maxRating)
+      e.rating <= parseFloat(filter.maxRating)
       );
     }
 
     if(filter.minPrice!=''){
       equipmentFiltered = equipmentFiltered.filter((e) =>
-      parseFloat(e.price) >= parseFloat(filter.minPrice)
+      e.price >= parseFloat(filter.minPrice)
       );
     }
 
     if(filter.maxPrice!=''){
       equipmentFiltered = equipmentFiltered.filter((e) =>
-      parseFloat(e.price) <= parseFloat(filter.maxPrice)
+      e.price <= parseFloat(filter.maxPrice)
       );
     }
     
@@ -67,14 +66,15 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
     } else if (filter.orderBy === "rating") {
       equipmentFiltered.sort((a, b) => b.rating - a.rating);
     } else if (filter.orderBy === "price") {
-      equipmentFiltered.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+      equipmentFiltered.sort((a, b) => a.price - b.price);
     }
 
     let sortOrder = parseFloat(filter.sort);
     if (sortOrder === 1) {
-      equipmentFiltered.reverse(); // Reverta a ordem se sortOrder for igual a 1 (descrescente)
+      equipmentFiltered.reverse(); 
     }
-    //setFilteredData(equipmentFiltered)
+    console.log(equipmentFiltered)
+    setFilteredData(equipmentFiltered)
     setEquipmentFiltered(equipmentFiltered);
   };
   

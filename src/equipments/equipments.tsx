@@ -1,4 +1,5 @@
-export const equipments = 
+import { Equipment } from '../../types/Equipment';
+export const equipments: Equipment[] = 
 [
   {
     "id": "1e780016-94ef-4063-9fbb-fbafbabb636e",

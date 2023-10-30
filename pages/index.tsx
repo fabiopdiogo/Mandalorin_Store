@@ -5,28 +5,34 @@ import styled from 'styled-components'
 import { Equipment } from '../types/Equipment';
 import Card from '../src/components/Card/Card';
 import Navbar from '../src/components/Navbar/Navbar';
-import { CartContext } from '../src/contexts/CartContext';
-
+import { CartContext } from '../src/contexts/Cart/CartContext';
+import { equipments } from '../src/equipments/equipments';
 const IndexPage = () => {
   const {
-    cartState: {equipments}
+    cartState 
   } = useContext(CartContext);
 
-  const [equipmentFiltered,setEquipmentFiltered] = useState<any[]>([]);
-  const [clear,setClear] = useState<boolean>(false);
+  const [equipmentFiltered,setEquipmentFiltered] = useState<any[]>(equipments);
+   
   
   useEffect(() => {
-    setEquipmentFiltered(equipments)
-  },[equipments])
+    //setEquipmentFiltered(equipments)
+    console.log(equipmentFiltered) 
+  },[equipmentFiltered])
 
-  return (
+  return ( 
     <Main>
       <Navbar setEquipmentFiltered={setEquipmentFiltered} />
        <ItemsSection>
-          {equipmentFiltered.map((equipment) => (
-              <Card equipment={equipment} />
-          )
-          )}
+       {equipmentFiltered.length > 0 && (
+            <>
+              {
+                equipmentFiltered.map((equipment: Equipment) => (
+                  <Card equipment={equipment} />
+                ))
+              }
+            </>
+         )}
        </ItemsSection>
     </Main>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { equipments } from '../../../pages/api/equipments/equipments';
+import {equipments}  from '../../equipments/equipments';
 
 interface Filter {
   search: string;
@@ -14,12 +14,13 @@ interface Filter {
 }
 
 interface FilterBarProps {
-  onFilterChange: (filter: Filter) => void;
-  setEquipmentFiltered: (filteredData: any[]) => void;
+  onFilterChange?: (filter: Filter) => void;
+  setEquipmentFiltered?: (filteredData: any[]) => void;
 }
 
 
-const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange,setEquipmentFiltered }) => {
+const FilterBar: React.FC <FilterBarProps> = ({setEquipmentFiltered, onFilterChange}) => {
+  
   const [filter, setFilter] = useState<Filter>({
     search: '',
     minRating: '',
@@ -65,61 +66,61 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange,setEquipmentFilter
       <FilterInput
         type="text"
         name="search"
-        value={filter.search}
         placeholder="Search"
-        onChange={handleInputChange}
+        value={filter.search}
+        onChange={handleInputChange}        
       />
 
       <FilterInput
         type="number"
         name="minRating"
-        value={filter.minRating}
         placeholder="Min Rating"
+        value={filter.minRating}
         onChange={handleInputChange}
       />
 
       <FilterInput
         type="number"
         name="maxRating"
-        value={filter.maxRating}
         placeholder="Max Rating"
+        value={filter.maxRating}
         onChange={handleInputChange}
       />
 
       <FilterInput
         type="number"
         name="minPrice"
-        value={filter.minPrice}
         placeholder="Min Price"
+        value={filter.minPrice}
         onChange={handleInputChange}
       />
 
       <FilterInput
         type="number"
         name="maxPrice"
-        value={filter.maxPrice}
         placeholder="Max Price"
+        value={filter.maxPrice}
         onChange={handleInputChange}
       />
 
       <FilterCheckbox>
         <input
           type="checkbox"
-          name="isAvailable"
+          name="isAvailable"          
           checked={filter.isAvailable}
           onChange={handleInputChange}
         />
         Available
       </FilterCheckbox>
 
-      <FilterSelect name="orderBy" value={filter.orderBy} onChange={handleInputChange}>
+      <FilterSelect name="orderBy" onChange={handleInputChange}>
         <option value="default">Default</option>
         <option value="name">Name</option>
         <option value="rating">Rating</option>
         <option value="price">Price</option>
       </FilterSelect>
 
-      <FilterSelect name="sort" value={filter.sort} onChange={handleInputChange}>
+      <FilterSelect name="sort" onChange={handleInputChange}>
         <option value={0}>Crescente</option>
         <option value={1}>Decrescente</option>
       </FilterSelect>

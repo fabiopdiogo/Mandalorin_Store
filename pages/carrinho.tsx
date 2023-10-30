@@ -1,6 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { CartContext } from '../src/contexts/CartContext';
+import { CartContext } from '../src/contexts/Cart/CartContext';
+import ProdCart from '../src/components/ProdCart/ProdCart';
+import {withIronSessionSsr}  from "iron-session/next"
+
+import {ironConfig} from '../lib/middlewares/ironSession';
+
 
 function Carrinho() {  
   const {
@@ -9,7 +14,10 @@ function Carrinho() {
   console.log(cartItems)
   return (
     <Div>
-      <p>Carrinho</p>
+      {cartItems.map((item) => (
+        <ProdCart product_id={item.id} />
+      )
+      )}
     </Div>
   );
 }
