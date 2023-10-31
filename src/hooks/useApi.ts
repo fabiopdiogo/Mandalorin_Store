@@ -2,7 +2,7 @@ import axios from 'axios';
 import { baseURL } from "../utils/constant";
 
 export const apiURL = axios.create({
-  baseURL: process.env.REACT_APP_API
+  baseURL: process.env.NEXT_PUBLIC_API_URL
 });
 
 export const useApi = () => ({

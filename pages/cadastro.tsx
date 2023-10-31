@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {baseURL} from '../utils/constant'
+import {baseURL} from '../src/utils/constant'
 import Button from "../src/components/inputs/Button";
 import Input from "../src/components/inputs/Input";
 
@@ -24,15 +24,15 @@ function Cadastro() {
   });
 
   const createUser = async (e: FormEvent<HTMLFormElement>) => {
+
+    const { name, email,address,password } = formData;
     e.preventDefault();
   
-    try {
-
-    } catch (error) {
-      console.error(error);
-      // Lide com erros aqui, por exemplo, definindo mensagens de erro na sua interface do usuário
-    }
-  };
+    axios.post(`${baseURL}/cadastro`, formData).then((res) => {
+      console.log(res.data);
+    });
+  }
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -47,7 +47,7 @@ function Cadastro() {
       <Input label="Email" name="email" onChange={handleChange} value={formData.email} />
       <Input label="Endereço" name="address"  onChange={handleChange} value={formData.address} />
       <Input label="Senha" name="password"  onChange={handleChange} value={formData.password} />
-      <button type="submit">Cadastrar</button>
+      <Button type="submit">Cadastrar</Button>
     </Form>
   );
 }

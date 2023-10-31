@@ -6,7 +6,7 @@ import { CartContext } from './CartContext';
 import { cartReducer } from './reducer';
 import { Equipment } from '../../../types/Equipment';
 
-export const CartProvider: React.FC = ({ children }: { children: JSX.Element }) => {
+export const CartProvider = ({ children }: { children: JSX.Element }) => {
   const [data, setData] = useState<Equipment[]>([]);
   const [cartState, cartDispatch] = useReducer(cartReducer, {
     equipments: data,
@@ -16,9 +16,11 @@ export const CartProvider: React.FC = ({ children }: { children: JSX.Element }) 
   useEffect(() => {
     cartDispatch({ type: 'POPULATE_EQUIPMENTS', payload: data });
   }, []); 
+  
   useEffect(() => {
     const listEquipments = async () => {
       const response = await axios.get(`${baseURL}/equipments`);
+      console.log(response)
       setData(response.data);
     };
     listEquipments();

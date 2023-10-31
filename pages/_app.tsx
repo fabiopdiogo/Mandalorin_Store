@@ -3,6 +3,8 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 import theme from '../src/theme'
 import { CartProvider } from '../src/contexts/Cart/CartProvider';
+import { AuthProvider } from '../src/contexts/Auth/AuthProvider';
+
 const GlobalStyle = createGlobalStyle`
   * {
     padding: 0;
@@ -11,19 +13,19 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Roboto', sans-serif;
-    color: ${props => props.theme.white};
-    background-color: ${props => props.theme.black};
+    color: #FFFFFF;
+    background-color: #3A3A3A;
   }
 
   a{
-    color: ${props => props.theme.primary};
+    color: #8933CD;
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s;
   }
 
   a:hover {
-    color: ${props => props.theme.primaryHover};
+    color: 7029A8;
   }
 
 `
@@ -31,13 +33,14 @@ const GlobalStyle = createGlobalStyle`
 function App({ Component, pageProps }) {
   
   return (
-    <CartProvider>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </ThemeProvider>
-    </CartProvider>
-
+      <AuthProvider>
+        <CartProvider>        
+            <ThemeProvider theme={theme}>
+                <GlobalStyle />
+                <Component {...pageProps} />
+              </ThemeProvider>     
+       </CartProvider>
+      </AuthProvider>
   );
 }
 
