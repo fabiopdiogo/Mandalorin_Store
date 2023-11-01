@@ -1,23 +1,83 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CartContext } from '../src/contexts/Cart/CartContext';
+import Link from 'next/link';
+import { Equipment } from '../types/Equipment'
 import ProdCart from '../src/components/ProdCart/ProdCart';
-import {withIronSessionSsr}  from "iron-session/next"
+import { AuthContext } from '../src/contexts/Auth/AuthContext';
+import { CartContext } from '../src/contexts/Cart/CartContext';
+import { Cart } from '../types/Cart';
+import { equipments } from '../src/equipments/equipments';
 
-import {ironConfig} from '../lib/middlewares/ironSession';
-
-
-function Carrinho() {  
+function Carrinho() {
+  const { cartDispatch } = useContext(CartContext);
   const {
-    cartState: {cartItems}
+    cartState: {cartItems},
   } = useContext(CartContext);
-  console.log(cartItems)
+  //const auth = useContext(AuthContext);
+
+  const isCartEmpty = cartItems.length === 0;
+  
+  const clearCartAndNavigate = () => {  
+  window.alert('Compra finalizada com sucesso!');
+    if (cartDispatch) {
+      cartDispatch({ type: 'CLEAR_CART' });
+    }
+    /*
+    if (finishPurchase && auth.user) {
+      finishPurchase(auth.user._id);
+    }
+    */
+  };
+  const somarPrecos = (cartItems: Equipment[], productQuantities: { [productId: string]: number }) => {
+    let total = 0;
+  
+    for (const item of cartItems) {
+      const productPrice = item.price;
+      const quantity = productQuantities[item.id];
+      
+      if (productPrice && quantity) {
+        total += productPrice * quantity;
+      }
+    }
+  
+    return total;
+  };
+  
+  const [productQuantities, setProductQuantities] = useState<{ [productId: string]: number }>({});
+  
+  useEffect(() => {
+    const quantities = cartItems.reduce((acc, product) => {
+      acc[product.id] = product.quantity;
+      return acc;
+    }, {});
+    setProductQuantities(quantities);
+  }, [setProductQuantities]);
+
+  console.log(productQuantities)
   return (
     <Div>
-      {cartItems.map((item) => (
-        <ProdCart product_id={item.id} />
-      )
-      )}
+      <Header>
+        <h1>Mangalorian Store</h1>
+        <Link href="/">Voltar</Link>
+      </Header>
+      <Main>
+        <Products>
+          <SpanCarrinho>
+            <h1>Carrinho</h1>
+            <span>{cartItems.length} items</span>
+          </SpanCarrinho>
+          {cartItems.map((prod: Equipment) => (
+            <ProdCart product_id ={prod.id} quantity={productQuantities[prod.id] || 1} setProductQuantities={setProductQuantities}/>
+          ))}
+        </Products>
+        <Summary>
+          <h2>Resumo</h2>
+          <span>Total: R${somarPrecos(cartItems, productQuantities).toFixed(2)}</span>
+          <Link href="/"><Button1 onClick={clearCartAndNavigate} disabled={isCartEmpty}>Confirmar</Button1></Link>
+        </Summary>
+      </Main>
+      <Link href="/"><Button2 onClick={clearCartAndNavigate} disabled={isCartEmpty}>Confirmar</Button2></Link>
+
     </Div>
   );
 }

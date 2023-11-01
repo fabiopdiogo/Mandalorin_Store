@@ -5,34 +5,40 @@ import { CartContext } from '../../contexts/Cart/CartContext';
 
 interface Props {
   product_id: string;
-  //id_user: string;
-  //quantity: number;
+  setProductQuantities: any
+  quantity: number;
 }
 
-function ProdCart({product_id}: Props) {
+function ProdCart({product_id,quantity,setProductQuantities}: Props) {
   const {
-    cartState: {equipments},
+    cartState: {cartItems},
     cartDispatch
   } = useContext(CartContext);
-  
+
+  console.log(product_id)
    function findOneById(id: string) {
-    return equipments.find((product: { id: string; }) => product.id === id);
+    return cartItems.find((product: { id: string; }) => product.id === id);
   }
   
   const { name, image, price } = findOneById(product_id) || {};
-
+  console.log({ name, image, price })
   const RemoveProd = () => {
     cartDispatch({ type: 'REMOVE_FROM_CART', payload: product_id });
   };
 
   const handleQuantity = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const intValue = parseInt(event.target.value, 10);
-    cartDispatch({ type: 'UPDATE_CART_QTY', payload: { product_id, quantity: intValue } });
+    const newQuantity = parseInt(event.target.value, 10);
+    // Atualize o estado de quantidades no componente Carrinho
+    setProductQuantities((prevQuantities: any) => ({
+      ...prevQuantities,
+      [product_id]: newQuantity,
+    }));
   };
+  
   
   const handlePrice = () => {    
     if (price) {
-      //return price * quantity;
+      return price * quantity;
     }    
     return 0;
   };
@@ -44,7 +50,7 @@ function ProdCart({product_id}: Props) {
         <ProductName>{name}</ProductName>
         <ProductPrice>${handlePrice()}</ProductPrice>
       </ProductDetails>
-      <ProductQuantity value={0} onChange={handleQuantity}>
+      <ProductQuantity value={quantity} onChange={handleQuantity}>
         {[1, 2, 3, 4, 5].map((value) => (
           <option key={value} value={value}>
             {value}
