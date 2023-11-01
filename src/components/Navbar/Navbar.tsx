@@ -7,16 +7,21 @@ import Filter from '../Filter/Filter'
 import { CartContext } from '../../contexts/Cart/CartContext';
 import { Equipment } from '../../../types/Equipment';
 import { equipments } from '../../equipments/equipments';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { useRouter } from 'next/router';
 
 interface Props {
   setEquipmentFiltered: (filteredData: Equipment[]) => void;
 }
 
 const Navbar = ({setEquipmentFiltered}: Props) => {
+  
+  const auth = useContext(AuthContext);
+  const router = useRouter();
+  
   const {
-    cartState 
+    cartDispatch
   } = useContext(CartContext);
-
   const [filteredData, setFilteredData] = useState(equipments);
 
   useEffect(() => {
@@ -77,14 +82,29 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
     setFilteredData(equipmentFiltered)
     setEquipmentFiltered(equipmentFiltered);
   };
-  
+  const handleLogout = async () => {    
+    cartDispatch({ type: 'CLEAR_CART'});
+    await auth.signout();    
+  }  
+  const handleLogin =  () => {
+    router.push('/login')
+  }  
   return (
     <>      
       <header className={styles.header}>        
         <Filter onFilterChange={handleFilterChange} setEquipmentFiltered={setEquipmentFiltered}/>
         <div className={styles.icons}>
           <div className={styles.icon}>            
-              <Link href="/carrinho"><img src="icons/carrinho.png" alt="Carrinho de compras" /></Link>            
+              <Link href="/carrinho"><img src="icons/carrinho.png" alt="Carrinho de compras" /></Link> 
+              {auth.user ? (
+                <Link href="/">
+                  <StyledA onClick={handleLogout}>Sair</StyledA>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <StyledA onClick={handleLogin}>Fazer Login</StyledA>
+                </Link>)}
+    
           </div>       
         </div>
       </header>
@@ -93,3 +113,8 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
 }
 
 export default Navbar;
+
+const StyledA = styled.a`
+  font: bolder;
+  cursor: pointer;
+`

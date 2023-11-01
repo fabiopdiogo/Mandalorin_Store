@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import { Equipment } from '../types/Equipment'
 import ProdCart from '../src/components/ProdCart/ProdCart';
 import { AuthContext } from '../src/contexts/Auth/AuthContext';
@@ -9,11 +11,21 @@ import { Cart } from '../types/Cart';
 import { equipments } from '../src/equipments/equipments';
 
 function Carrinho() {
+  
+  const auth = useContext(AuthContext);
+  const router = useRouter();
+  useEffect(() => {
+    if (!auth.user) {
+      // Redirecione para a página de login se o usuário não estiver autenticado
+      router.push('/login');
+    }
+  }, [auth.user]);
+
   const { cartDispatch } = useContext(CartContext);
   const {
     cartState: {cartItems},
   } = useContext(CartContext);
-  //const auth = useContext(AuthContext);
+  console.log(auth.user)
 
   const isCartEmpty = cartItems.length === 0;
   
