@@ -2,13 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
+import {baseURL} from '../src/utils/constant'
 import { Equipment } from '../types/Equipment'
 import ProdCart from '../src/components/ProdCart/ProdCart';
 import { AuthContext } from '../src/contexts/Auth/AuthContext';
 import { CartContext } from '../src/contexts/Cart/CartContext';
 import { Cart } from '../types/Cart';
 import { equipments } from '../src/equipments/equipments';
+
 
 function Carrinho() {
   
@@ -25,20 +28,33 @@ function Carrinho() {
   const {
     cartState: {cartItems},
   } = useContext(CartContext);
-  console.log(auth.user)
 
   const isCartEmpty = cartItems.length === 0;
   
-  const clearCartAndNavigate = () => {  
-  window.alert('Compra finalizada com sucesso!');
+  const clearCartAndNavigate = async () => {      
+
     if (cartDispatch) {
       cartDispatch({ type: 'CLEAR_CART' });
-    }
-    /*
-    if (finishPurchase && auth.user) {
-      finishPurchase(auth.user._id);
-    }
-    */
+    }    
+
+    const requestData = {
+      cartItems: cartItems, // Substitua pelo seu array de items no carrinho
+      productQuantities: productQuantities, // Substitua pela sua variável de quantidades
+    };
+    
+    const response  = await axios.post(`${baseURL}/pedido/${auth.user?._id}`, requestData)
+      .then((response) => {
+        if (response.data.pedido) {
+          const pedidoString = JSON.stringify(response.data.pedido, null, 2); // A função JSON.stringify() converte o objeto em uma string formatada
+          window.alert(pedidoString);
+        }
+      })
+      .catch((error) => {
+        console.error('Erro na solicitação:', error);
+      });
+      
+      window.alert("Pedido realizado com sucesso!");
+      console.log(response)
   };
   const somarPrecos = (cartItems: Equipment[], productQuantities: { [productId: string]: number }) => {
     let total = 0;
@@ -65,7 +81,6 @@ function Carrinho() {
     setProductQuantities(quantities);
   }, [setProductQuantities]);
 
-  console.log(productQuantities)
   return (
     <Div>
       <Header>

@@ -62,21 +62,28 @@ export default Card;
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start ;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 15px;
   background-color: ${props => props.theme.secondaryColor};
   color: ${props => props.theme.primaryColor};
   padding: 10px;
-  border: 1px solid ${props => props.theme.primaryColor};
+  border: 1px solid #99c1eb;
   margin: 10px;
-  width: 200px;
-  height: 450px;
+  width: 100%; 
+  min-height: 450px;
+
+  @media (max-width: 500px) {
+    width: auto;
+    height: 550px;
+  }
 `;
 
 const Image = styled.img`
-  width: 150px;
-  height: 150px;
+  max-width: 150px;
+  width: 100%;
+  max-height: 150px;
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -88,7 +95,9 @@ const Button = styled.button`
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out; /* Adicionando a transição */
+  transition: background-color 0.3s ease-in-out; 
+
+
 
   &:hover {
     background-color: ${(props) => (props.disabled ? props.theme.disabled : 'blue')};

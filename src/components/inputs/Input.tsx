@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Control, FieldValues, useController } from 'react-hook-form'
+import { Control, FieldErrors, FieldValues, useController } from 'react-hook-form'
 
 const InputContainer = styled.div`
   width: 500px;
@@ -49,23 +49,24 @@ interface Props{
   defaultValue?: string
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; 
   value?:string;
-  error?:string
+  error?:any;
+  type: string;
 }
 
 type ContainerProps ={
   grid: string;
 }
 
-const Input = ({ label, name, value, error, onChange } : Props) => {
+const Input = ({type, label, name, value, error, onChange } : Props) => {
   return (
     <InputContainer>
       <StyledLabel>{label}</StyledLabel>
       <StyledInput
         name={name}
         placeholder={label}
-        value={value} // Adiciona a propriedade value para refletir o valor do input
-        onChange={onChange} // Passa a função handleChange para atualizar o valor
+        type={type}
       />
+      {error && <ErrorLabel>{error.message}</ErrorLabel>}
     </InputContainer>
   );
 };

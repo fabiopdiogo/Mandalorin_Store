@@ -85,28 +85,31 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
   const handleLogout = async () => {    
     cartDispatch({ type: 'CLEAR_CART'});
     await auth.signout();    
+    router.push('/login')
   }  
   const handleLogin =  () => {
     router.push('/login')
   }  
   return (
     <>      
-      <header className={styles.header}>        
-        <Filter onFilterChange={handleFilterChange} setEquipmentFiltered={setEquipmentFiltered}/>
-        <div className={styles.icons}>
-          <div className={styles.icon}>            
+      <header className={styles.header}>             
+        <div className={styles.header2}>          
+          <h1>MANDALORIAN STORE</h1> 
+          <div>            
               <Link href="/carrinho"><img src="icons/carrinho.png" alt="Carrinho de compras" /></Link> 
               {auth.user ? (
                 <Link href="/">
-                  <StyledA onClick={handleLogout}>Sair</StyledA>
+                  <Button onClick={handleLogout}>Sair</Button>
                 </Link>
               ) : (
                 <Link href="/login">
-                  <StyledA onClick={handleLogin}>Fazer Login</StyledA>
+                  <Button onClick={handleLogin}>Fazer Login</Button>
                 </Link>)}
     
-          </div>       
+          </div>             
         </div>
+
+        <Filter onFilterChange={handleFilterChange} setEquipmentFiltered={setEquipmentFiltered}/>    
       </header>
     </>
   )
@@ -114,7 +117,10 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
 
 export default Navbar;
 
-const StyledA = styled.a`
-  font: bolder;
+const Button = styled.button`
+  background-color: #7516b4; 
+  color: white; 
+  border-radius: 4px;
+  padding: 5px 10px;
   cursor: pointer;
-`
+`;

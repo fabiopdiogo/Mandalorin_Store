@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/index.jsx", "pages/carrinho.jsx"  ],
+, "pages/index.jsx", "pages/carrinho.jsx", "pages/cadastro.tsx", "pages/login.jsx"  ],
   "exclude": [
     "node_modules"
   ]

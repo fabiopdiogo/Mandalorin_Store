@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a{
-    color: #8933CD;
+    color: #FFFFFF;
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s;

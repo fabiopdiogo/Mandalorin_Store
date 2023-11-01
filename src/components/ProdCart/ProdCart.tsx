@@ -15,13 +15,13 @@ function ProdCart({product_id,quantity,setProductQuantities}: Props) {
     cartDispatch
   } = useContext(CartContext);
 
-  console.log(product_id)
+ 
    function findOneById(id: string) {
     return cartItems.find((product: { id: string; }) => product.id === id);
   }
   
   const { name, image, price } = findOneById(product_id) || {};
-  console.log({ name, image, price })
+  
   const RemoveProd = () => {
     cartDispatch({ type: 'REMOVE_FROM_CART', payload: product_id });
   };
@@ -34,7 +34,6 @@ function ProdCart({product_id,quantity,setProductQuantities}: Props) {
       [product_id]: newQuantity,
     }));
   };
-  
   
   const handlePrice = () => {    
     if (price) {

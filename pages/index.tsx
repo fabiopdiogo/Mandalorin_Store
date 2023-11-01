@@ -7,6 +7,7 @@ import Card from '../src/components/Card/Card';
 import Navbar from '../src/components/Navbar/Navbar';
 import { CartContext } from '../src/contexts/Cart/CartContext';
 import { equipments } from '../src/equipments/equipments';
+
 const IndexPage = () => {
   const {
     cartState 
@@ -48,9 +49,26 @@ const ItemsSection = styled.section`
   justify-content: center;
   align-items:center;
   flex-wrap: wrap;
-`
+
+  @media(max-width: 935px){
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:40px;
+    padding-right: 40px;
+  }
+
+  @media(max-width: 500px){
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap:10px;    
+    padding-left: 40px;
+  }
+  @media(max-width: 300px){
+    grid-template-columns: repeat(1, 1fr);
+    padding-left: 40px;
+  }
+  `
 const Main = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 `

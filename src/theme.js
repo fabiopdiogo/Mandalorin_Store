@@ -5,7 +5,7 @@ const theme = {
   inputBorder: '#E6E6E6',
   background: '#ECECEC',
   black: '#3A3A3A',
-  white: '#FFFFFF',
+  white: '#99c1eb',
   error: 'red',
   disabled: 'grey',
 }
