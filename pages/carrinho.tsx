@@ -14,7 +14,7 @@ import { equipments } from '../src/equipments/equipments';
 
 
 function Carrinho() {
-  
+  let total = '';
   const auth = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
@@ -56,21 +56,7 @@ function Carrinho() {
       window.alert("Pedido realizado com sucesso!");
       console.log(response)
   };
-  const somarPrecos = (cartItems: Equipment[], productQuantities: { [productId: string]: number }) => {
-    let total = 0;
-  
-    for (const item of cartItems) {
-      const productPrice = item.price;
-      const quantity = productQuantities[item.id];
-      
-      if (productPrice && quantity) {
-        total += productPrice * quantity;
-      }
-    }
-  
-    return total;
-  };
-  
+
   const [productQuantities, setProductQuantities] = useState<{ [productId: string]: number }>({});
   
   useEffect(() => {
@@ -81,6 +67,7 @@ function Carrinho() {
     setProductQuantities(quantities);
   }, [setProductQuantities]);
 
+ 
   return (
     <Div>
       <Header>
@@ -99,7 +86,14 @@ function Carrinho() {
         </Products>
         <Summary>
           <h2>Resumo</h2>
-          <span>Total: R${somarPrecos(cartItems, productQuantities).toFixed(2)}</span>
+          <span>Total: ${cartItems.reduce((total, product) => {
+            const productPrice = product.price;
+            const quantity = productQuantities[product.id] || 1;
+            if (productPrice && quantity) {
+              return total + productPrice * quantity;
+            }
+            return total;
+          }, 0)}</span>
           <Link href="/"><Button1 onClick={clearCartAndNavigate} disabled={isCartEmpty}>Confirmar</Button1></Link>
         </Summary>
       </Main>

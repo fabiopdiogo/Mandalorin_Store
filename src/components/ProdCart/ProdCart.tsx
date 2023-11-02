@@ -56,7 +56,7 @@ function ProdCart({product_id,quantity,setProductQuantities}: Props) {
           </option>
         ))}
       </ProductQuantity>
-      <Remove src="bin.png" alt="Remove" onClick={RemoveProd} />
+      <Remove src="icons/lixeira.png" alt="Remover" onClick={RemoveProd} />
     </CartItemContainer>
   );
 }

@@ -24,10 +24,6 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
   } = useContext(CartContext);
   const [filteredData, setFilteredData] = useState(equipments);
 
-  useEffect(() => {
-    console.log(filteredData)
-  },[filteredData])
-
   const handleFilterChange = (filter) => {
     console.log('Filtros:', filter);
   
@@ -78,7 +74,7 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
     if (sortOrder === 1) {
       equipmentFiltered.reverse(); 
     }
-    console.log(equipmentFiltered)
+   
     setFilteredData(equipmentFiltered)
     setEquipmentFiltered(equipmentFiltered);
   };
@@ -95,8 +91,8 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
       <header className={styles.header}>             
         <div className={styles.header2}>          
           <h1>MANDALORIAN STORE</h1> 
-          <div>            
-              <Link href="/carrinho"><img src="icons/carrinho.png" alt="Carrinho de compras" /></Link> 
+          <Div>            
+              <Image src="icons/carrinho.png" alt="Carrinho de compras" onClick={() => router.push('/carrinho')} /> 
               {auth.user ? (
                 <Link href="/">
                   <Button onClick={handleLogout}>Sair</Button>
@@ -106,7 +102,7 @@ const Navbar = ({setEquipmentFiltered}: Props) => {
                   <Button onClick={handleLogin}>Fazer Login</Button>
                 </Link>)}
     
-          </div>             
+          </Div>             
         </div>
 
         <Filter onFilterChange={handleFilterChange} setEquipmentFiltered={setEquipmentFiltered}/>    
@@ -123,4 +119,12 @@ const Button = styled.button`
   border-radius: 4px;
   padding: 5px 10px;
   cursor: pointer;
+`;
+const Image = styled.img`
+  cursor: pointer;
+`;
+
+const Div = styled.div`
+  display: flex;
+  gap: 5px;
 `;

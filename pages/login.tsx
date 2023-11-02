@@ -9,8 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { AuthContext } from "../src/contexts/Auth/AuthContext"
 import { baseURL } from "../src/utils/constant"
-import Input from "../src/components/inputs/Input"
-
+import Button from "../src/components/inputs/Button";
 function Login (){
   const router = useRouter();
   
@@ -29,7 +28,7 @@ function Login (){
       if(email && password){
         
         const response = await auth.signin(email,password);  
-        console.log(response)  
+         
         if (response === true) {
           console.log(auth.user);
           router.push('/')
@@ -87,16 +86,6 @@ const Div = styled.div`
 `
 const Img = styled.img`
   width: 50px;
-`
-const Button = styled.button`
-  width: 100px;
-  resize:none;  
-  background-color: #7516b4; 
-  color:#ffffff;  
-  padding: 15px;
-  cursor: pointer;
-  border-radius: 4px;
-  
 `
 
 const StyledInput = styled.input`
