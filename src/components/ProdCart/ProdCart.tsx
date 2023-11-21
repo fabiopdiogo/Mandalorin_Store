@@ -87,7 +87,7 @@ const ProductImage = styled.img`
 const ProductDetails = styled.div`
   display: flex;
   flex-direction: column;
-
+  width: 250px;
   @media (max-width: 350px) {
     align-items: center;
   }

@@ -97,21 +97,24 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease-in-out; 
 
-
-
-  &:hover {
-    background-color: ${(props) => (props.disabled ? props.theme.disabled : 'blue')};
-  }
-
   &:disabled {
     background-color: ${(props) => props.theme.disabled};
   }
 `;
 
 const ButtonAdd = styled(Button)`
-  background-color: lightblue;
+  background-color: blue;
+
+  &:hover {
+    background-color: ${(props) => (props.disabled ? props.theme.disabled : '#5252f8')};
+  }
 `;
 
 const ButtonRemove = styled(Button)`
   background-color: red;
+
+  &:hover {
+    background-color: ${(props) => (props.disabled ? props.theme.disabled : '#d45454')};
+  }
+
 `;

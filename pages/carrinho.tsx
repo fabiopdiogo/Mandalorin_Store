@@ -80,9 +80,18 @@ function Carrinho() {
             <h1>Carrinho</h1>
             <span>{cartItems.length} items</span>
           </SpanCarrinho>
-          {cartItems.map((prod: Equipment) => (
-            <ProdCart product_id ={prod.id} quantity={productQuantities[prod.id] || 1} setProductQuantities={setProductQuantities}/>
-          ))}
+          {cartItems.length > 0 ? (
+            cartItems.map((prod: Equipment) => (
+              <ProdCart
+                key={prod.id}  // Assuming each product has a unique ID for the key
+                product_id={prod.id}
+                quantity={productQuantities[prod.id] || 1}
+                setProductQuantities={setProductQuantities}
+              />
+            ))
+          ) : (
+            <CenteredP>O carrinho está vazio.</CenteredP>
+          )}
         </Products>
         <Summary>
           <h2>Resumo</h2>
@@ -162,13 +171,10 @@ const Summary = styled.div`
   }
 `;
 
-const Footer = styled.footer`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20vh;
+const CenteredP = styled.p`
+  text-align: center;
+  margin-top: 50px; /* Adjust the margin as needed for vertical positioning */
 `;
-
 const Button1 = styled.button`
   background-color: blue;
   width: 100%;
